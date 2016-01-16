@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Push notification</title>
+	</head>
+	
+	<body>
+		<h1> Notifications</h1>	
+	
+		<ol id = "notification"></ol><br>
+		Click Here: <a href="#" id="push1"  data-index="1" onclick="emit1()">Booking notification 1 </a><br>
+		Click Here: <a href="#" id="push2" data-index="2" onclick="emit2()">Booking notification 2 </a>	<br>	
+		
+
+	</body>
+	<script src="/socket.io/socket.io.js"></script>		
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+	<script>
+  		var socket = io();
+
+		function emit1() {
+
+			var notification = $('#push1').text();
+		
+			socket.emit('push', notification);
+		};
+		
+		function emit2() {
+
+			var notification = $('#push2').text();
+		
+			socket.emit('push', notification);
+
+		};
+
+		socket.on('push', function(notification){
+		
+		$('#notification').append($('<li>').text(notification));
+			
+		});
+	</script>
+	
+</html>
